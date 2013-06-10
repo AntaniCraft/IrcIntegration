@@ -1,0 +1,13 @@
+This is a mod allowing to connect a minecraft server to IRC. Currently it's only a servermod and as such doesn't run on clients (doesn't trigger crashes though)
+
+It has 2 modes.
+
+'serverbot' - it works like ForgeIRC. We almost have feature parity.
+'server' - it behaves like a server multiplexing ingame users over a single connection.
+
+There is another mode planned.
+
+The license is basically MMPL with a twist. All derived code has to be under the same license,
+
+
+A great thanks goes to buildcraft devs for creating MMPL and their ant build.xml.
