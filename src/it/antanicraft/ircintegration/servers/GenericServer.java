@@ -16,31 +16,31 @@ public class GenericServer implements Server {
 
     @Override
     public boolean connect(PrintWriter writer, String[] users) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+        return false;  //TODO
     }
 
     @Override
     public void disconnect(PrintWriter writer) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        //TODO
     }
 
     @Override
     public void sendMessage(PrintWriter writer, String user, String message) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        //TODO
     }
 
     @Override
     public void sendUserLogged(PrintWriter writer, String user, boolean in) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        //TODO
     }
 
     @Override
     public void sendMeMessage(PrintWriter writer, String user, String message) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        //TODO
     }
 
     @Override
     public void parseLine(String line) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        //TODO
     }
 }

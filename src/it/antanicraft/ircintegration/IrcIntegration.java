@@ -13,13 +13,11 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.event.FMLServerStoppingEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
-import it.antanicraft.ircintegration.impl.IrcClientService;
+import it.antanicraft.ircintegration.impl.IrcServerBotService;
 import it.antanicraft.ircintegration.impl.IrcServerService;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.Property;
-import net.minecraftforge.event.ForgeSubscribe;
-import net.minecraftforge.event.ServerChatEvent;
 
 
 import java.io.File;
@@ -147,7 +145,7 @@ public class IrcIntegration {
         if(irc_mode.equals("server")){
             ircService=new IrcServerService();
         }else{
-            ircService=new IrcClientService();
+            ircService=new IrcServerBotService();
         }
 
         logger.info("Connecting to server.");

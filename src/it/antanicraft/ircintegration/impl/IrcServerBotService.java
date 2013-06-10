@@ -16,7 +16,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public class IrcClientService extends SocketConnection implements IrcService {
+public class IrcServerBotService extends SocketConnection implements IrcService {
     @Override
     public boolean connect() {
         if(!rawConnect()){

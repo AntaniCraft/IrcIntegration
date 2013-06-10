@@ -17,7 +17,6 @@ public class InspircdServer implements Server{
 
     @Override
     public boolean connect(PrintWriter writer, String[] users) {
-
         return true;
     }
 
