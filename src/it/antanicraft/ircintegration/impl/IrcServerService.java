@@ -37,7 +37,12 @@ public class IrcServerService extends SocketConnection implements IrcService {
 
     @Override
     public boolean connect() {
-        return rawConnect() && server.connect(getWriter(),MinecraftServer.getServer().getAllUsernames());
+        if(rawConnect() && server.connect(getWriter(),MinecraftServer.getServer().getAllUsernames())){
+            start();
+            return true;
+        }
+        rawDisconnect();
+        return false;
     }
 
     @Override

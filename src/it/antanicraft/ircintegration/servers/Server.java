@@ -9,6 +9,7 @@ package it.antanicraft.ircintegration.servers;
 
 
 import java.io.PrintWriter;
+import java.util.Scanner;
 
 public interface Server {
     /**
@@ -17,7 +18,7 @@ public interface Server {
      * @param users users currently connected on the server
      * @return true if succeeded
      */
-    public boolean connect(PrintWriter writer, String[] users);
+    public boolean connect(PrintWriter writer,Scanner scanner, String[] users);
 
     /**
      * Prepares for disconnecting.
