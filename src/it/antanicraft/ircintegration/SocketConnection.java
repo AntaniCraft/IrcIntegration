@@ -13,7 +13,7 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public abstract class SocketConnection extends Thread {
-
+    private IrcIntegrationConfig config = IrcIntegrationConfig.getInstance();
     private Socket socket;
     private Scanner scanner;
     private PrintWriter printer;
@@ -34,7 +34,7 @@ public abstract class SocketConnection extends Thread {
 
     public boolean rawConnect(){
         try {
-            socket=new Socket(IrcIntegration.irc_host,IrcIntegration.irc_port);
+            socket=new Socket(config.getIrcHost(),config.getIrcPort());
             scanner=new Scanner(socket.getInputStream());
             printer=new PrintWriter(socket.getOutputStream());
         } catch (IOException e) {
