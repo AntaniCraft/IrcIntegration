@@ -27,11 +27,11 @@ public abstract class SocketConnection extends Thread {
         printer.flush();
     }
 
-    protected boolean waitLine(){
-        if(scanner.hasNextLine())
-            scanner.nextLine();
-        return scanner.hasNextLine();
+    protected PrintWriter getWriter(){
+        return printer;
     }
+
+
     public boolean rawConnect(){
         try {
             socket=new Socket(IrcIntegration.irc_host,IrcIntegration.irc_port);
