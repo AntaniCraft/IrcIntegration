@@ -8,10 +8,11 @@
 package it.antanicraft.ircintegration.impl;
 
 import it.antanicraft.ircintegration.IrcIntegration;
+import it.antanicraft.ircintegration.IrcIntegrationConfig;
 import it.antanicraft.ircintegration.IrcService;
 import it.antanicraft.ircintegration.SocketConnection;
-import it.antanicraft.ircintegration.servers.GenericServer;
 import it.antanicraft.ircintegration.servers.InspircdServer;
+import it.antanicraft.ircintegration.servers.P10Server;
 import it.antanicraft.ircintegration.servers.Server;
 import net.minecraft.server.MinecraftServer;
 
@@ -21,10 +22,10 @@ public class IrcServerService extends SocketConnection implements IrcService {
     private Server server;
 
     public IrcServerService() {
-        if(IrcIntegration.irc_inspircd){
+        if(IrcIntegrationConfig.getInstance().getIrcInspircd()){
             server=new InspircdServer();
         }else{
-            server=new GenericServer();
+            server=new P10Server();
         }
         //TODO Other backends
     }
