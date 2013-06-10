@@ -8,17 +8,18 @@
 package it.antanicraft.ircintegration.servers;
 
 import it.antanicraft.ircintegration.IrcIntegration;
+import it.antanicraft.ircintegration.IrcIntegrationConfig;
 import it.antanicraft.ircintegration.IrcService;
 
 import java.io.PrintWriter;
 
 
 public class InspircdServer implements Server{
-
+    private IrcIntegrationConfig config = IrcIntegrationConfig.getInstance();
 
     @Override
     public boolean connect(PrintWriter writer, String[] users) {
-        writer.println("SERVER " + IrcIntegration.irc_servName + " " + IrcIntegration.irc_auth + " 0 " + IrcIntegration.irc_servName + " :Just your friendly minecraft server");
+        writer.println("SERVER " + config.getIrcServName() + " " + config.getIrcAuth() + " 0 " + config.getIrcServName() + " :Just your friendly minecraft server");
         return true;
     }
 

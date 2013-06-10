@@ -7,37 +7,35 @@
  */
 package it.antanicraft.ircintegration.impl;
 
-import it.antanicraft.ircintegration.ChatEvents;
-import it.antanicraft.ircintegration.IrcIntegration;
-import it.antanicraft.ircintegration.IrcService;
-import it.antanicraft.ircintegration.SocketConnection;
+import it.antanicraft.ircintegration.*;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
 public class IrcServerBotService extends SocketConnection implements IrcService {
+    private IrcIntegrationConfig config = IrcIntegrationConfig.getInstance();
     @Override
     public boolean connect() {
         if(!rawConnect()){
             return false;
         }
-        rawSend("USER "+ IrcIntegration.irc_botName + " myhost myhost :"+ IrcIntegration.irc_botName);
-        rawSend("NICK "+ IrcIntegration.irc_botName);
-        rawSend("JOIN #"+ IrcIntegration.irc_channel);
+        rawSend("USER "+ config.getIrcBotName() + " myhost myhost :"+ config.getIrcBotName());
+        rawSend("NICK "+ config.getIrcBotName());
+        rawSend("JOIN #"+ config.getIrcChannel());
         start();
         return true;
     }
 
     @Override
     public void disconnect() {
-        rawSend("PRIVMSG #"+ IrcIntegration.irc_channel+ " :goodbye.");
+        rawSend("PRIVMSG #"+ config.getIrcChannel()+ " :goodbye.");
         rawDisconnect();
     }
 
     @Override
     public void sendMessage(String user, String message) {
-        rawSend("PRIVMSG #"+ IrcIntegration.irc_channel+ " :" + user + ">"+ message);
+        rawSend("PRIVMSG #"+ config.getIrcChannel()+ " :" + user + ">"+ message);
     }
 
     @Override
@@ -48,20 +46,20 @@ public class IrcServerBotService extends SocketConnection implements IrcService 
         }else{
             message=" has logged out.";
         }
-        rawSend("PRIVMSG #"+ IrcIntegration.irc_channel+ " :"+Character.toString((char) 1)+"ACTION reports that <" + user + ">" + message + " "+Character.toString((char) 1));
+        rawSend("PRIVMSG #"+ config.getIrcChannel()+ " :"+Character.toString((char) 1)+"ACTION reports that <" + user + ">" + message + " "+Character.toString((char) 1));
     }
 
     @Override
     public void sendMeMessage(String user, String message) {
-        rawSend("PRIVMSG #"+ IrcIntegration.irc_channel+ " :"+ Character.toString((char) 1) +"ACTION heard " + user + " " + message +Character.toString((char) 1));
+        rawSend("PRIVMSG #"+ config.getIrcChannel()+ " :"+ Character.toString((char) 1) +"ACTION heard " + user + " " + message +Character.toString((char) 1));
     }
 
     @Override
     protected void rawReceive(String line) {
         if(line.startsWith("PING")){
-            rawSend("PONG "+IrcIntegration.irc_botName);
+            rawSend("PONG "+config.getIrcBotName());
         }else if(line.contains("PRIVMSG")){
-            Pattern privPattern=Pattern.compile("^:(.+?)!.+? PRIVMSG #"+IrcIntegration.irc_channel+" :(.+?)$");
+            Pattern privPattern=Pattern.compile("^:(.+?)!.+? PRIVMSG #"+config.getIrcChannel()+" :(.+?)$");
             Matcher matcher=privPattern.matcher(line);
             IrcIntegration.logger.info("[MATCH]"+ matcher.matches() );
             if(matcher.matches()){
