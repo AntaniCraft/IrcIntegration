@@ -1,7 +1,7 @@
 * Finish Servers implementation
-  - Implement P10
-  - Implement inspircd
-  - Write doc in the wiki, howto
+  - Implement P10 [Tony] WIP
+  - Implement inspircd [admiral0] WIP
+  - Write doc in the wiki, howto [admiral0]
 
 * Implement BotCommand manager
   - Create command interface
