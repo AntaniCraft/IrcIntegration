@@ -1,0 +1,23 @@
+* Finish Servers implementation
+  - Implement P10
+  - Implement inspircd
+  - Write doc in the wiki, howto
+
+* Implement BotCommand manager
+  - Create command interface
+  - Create some commands
+  - Export API
+
+* Serverside commands.
+  - reconnect
+  - status
+
+* Create clientside mod
+  - GUI - people on the channel
+    + keymappings
+    + optional indicator of chat status
+  - colors(?)
+ 
+* Modes
+  - 'client' : simple irc client mode. Autodect, remote-server-config
+  - 'serverfull' : full RFC 1459 compliant server.
