@@ -9,14 +9,27 @@ package it.antanicraft.ircintegration.servers;
 
 import java.io.PrintWriter;
 import java.util.Date;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import net.minecraft.server.dedicated.DedicatedServer;
 
 import it.antanicraft.ircintegration.IrcIntegrationConfig;
-
 
 
 public class P10Server implements Server {
 
     private IrcIntegrationConfig config = IrcIntegrationConfig.getInstance();
+    private Pattern serverAuth = Pattern.compile("PASS : (.+?)");
+    private Pattern serverAuth2 = Pattern.compile("SERVER (.+?) (\\d+?) (\\d+?) (\\d+?) (J10) (.+?) ((\\+).*?) :(.*?)");
+    private MyBase64 enc= new MyBase64();
+    private String connServerName;
+    private String connServerNumeric;
+    private int myserverNumeric =config.getIrcSID();
+    private String myserverNumeric64=enc.encode((Util.getSID()+String.valueOf(DedicatedServer.getServer().getMaxPlayers())).getBytes());
+    //TODO:when it comes to max players (P10 allow max players as a number equal to "power of 2 less one", need to check this out
+
 
 
 
@@ -24,19 +37,38 @@ public class P10Server implements Server {
 
 
     @Override
-    public boolean connect(PrintWriter writer, String[] users) {
-        String myname="P10Server";
-        Date test= new Date();
-        MyBase64 enc= new MyBase64();
+    public boolean connect(PrintWriter writer, Scanner scanner, String[] users) {
+        String  instance=String.valueOf(new Date().getTime());
+        int firstTryConnect=1;
+        int serverMaxN= DedicatedServer.getServer().getMaxPlayers();
+        String protocolInit="J10";
+        String sN64=enc.encode(String.valueOf(myserverNumeric).getBytes()) ;
+        String numeric64= sN64.concat(enc.encode(String.valueOf(serverMaxN).getBytes()));
 
+        writer.println("PASS :" + config.getIrcAuth());
+        writer.println("SERVER "+ config.getIrcServName()+ String.valueOf(firstTryConnect) + instance + String.valueOf(new Date().getTime()) + protocolInit + numeric64 + "+" + ":"+"["+config.getIrcHost()+"] "+":Your friendly minecraft server ");
 
+        writer.flush();
+        while(scanner.hasNextLine()){
+            String line = scanner.nextLine();
+            if(line.contains("ERROR")){
+                return false;
+            }
+            Matcher m = serverAuth.matcher(line);
+            if(m.matches() && m.group(3).equals(config.getIrcRevauth())){
+                line=scanner.nextLine();
+                m=serverAuth2.matcher(line);
+                if(m.group(1).equals("SERVER") && m.matches()){
+                 connServerName =m.group(2);
+                 connServerNumeric =m.group(7);
+              //TODO: end this (users list exchange method + check all the above m.group()'s ids
 
-        writer.println("SERVER "+ config.getIrcServName()+ " 1 " + test.getTime() + test.getTime() + "J10" + enc.encode(myname.getBytes()) );
-        //TODO: Finish this first connect line and go on!
+                return true;
+                }
 
-
-
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+            }
+        }
+        return false;
     }
 
     @Override
