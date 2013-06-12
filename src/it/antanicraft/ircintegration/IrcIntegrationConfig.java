@@ -24,6 +24,7 @@ public class IrcIntegrationConfig extends Configuration {
     private String ircServName;
     private String ircChannel;
     private String ircBotName;
+    private int ircSID;
 
 
     private static IrcIntegrationConfig instance;
@@ -56,6 +57,26 @@ public class IrcIntegrationConfig extends Configuration {
         ircInspircd=ircQuirkInspircd.getBoolean(false);
 
 
+        Property pircName = get("server mode","serverName","localhost");
+        pircName.comment = "Server name to pass to the hub server. It's ignored in serverbot mode.";
+        ircServName = pircName.getString();
+
+        Property pircSID = get("server mode","serverID",666);
+        pircSID.comment = "Some servers require to set a unique numerical ID";
+        ircSID = pircName.getInt();
+
+        Property pircAuth = get("server mode","auth","");
+        pircAuth.comment = "Password for authenticating on server. Leave it empty in 'serverbot' mode";
+        ircAuth = pircAuth.getString();
+
+        Property pircRevAuth = get("server mode","revAuth","");
+        pircRevAuth.comment = "Password for authenticating the other server. Leave it empty in 'serverbot' mode";
+        ircRevauth = pircRevAuth.getString();
+
+
+
+
+
 
         Property pircHost = get("Irc Connection","host","");
         pircHost.comment = "Server host name. It is usually an url";
@@ -64,18 +85,6 @@ public class IrcIntegrationConfig extends Configuration {
         Property pircPort = get("Irc Connection","port",6667);
         pircPort.comment = "Connection port. SSL is NOT supported yet.";
         ircPort = pircPort.getInt();
-
-        Property pircAuth = get("Irc Connection","auth","");
-        pircAuth.comment = "Password for authenticating on server. Leave it empty in 'serverbot' mode";
-        ircAuth = pircAuth.getString();
-
-        Property pircRevAuth = get("Irc Connection","revAuth","");
-        pircRevAuth.comment = "Password for authenticating the other server. Leave it empty in 'serverbot' mode";
-        ircRevauth = pircRevAuth.getString();
-
-        Property pircName = get("Irc Connection","serverName","localhost");
-        pircName.comment = "Server name to pass to the hub server. It's ignored in serverbot mode.";
-        ircServName = pircName.getString();
 
         Property pircBotName = get("Irc Connection","botName","MrSlave");
         pircBotName.comment = "Name of the bot that will appear in the chat.";
@@ -125,6 +134,10 @@ public class IrcIntegrationConfig extends Configuration {
 
     public String getIrcBotName() {
         return ircBotName;
+    }
+
+    public int getIrcSID(){
+        return ircSID;
     }
 }
 

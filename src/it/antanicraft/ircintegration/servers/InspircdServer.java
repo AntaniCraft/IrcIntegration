@@ -42,7 +42,7 @@ public class InspircdServer implements Server{
             }
             Matcher m = serverAuth.matcher(line);
             if(m.matches() && m.group(2).equals(config.getIrcRevauth())){
-
+                
                 return true;
             }
         }
