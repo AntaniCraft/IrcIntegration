@@ -23,8 +23,9 @@ public class ColorManager {
             return instance;
     }
 
-    public colorMCText(String text, McTextCodes color) {
-        return String(color.toString() + text + McTextCodes.RESET.toString());
+    public String colorMCText(String text, McTextCodes color) {
+        return color.toString() + text + McTextCodes.RESET.toString();
+
     }
 
 }
